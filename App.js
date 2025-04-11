@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet, View, Text } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
@@ -64,49 +65,51 @@ const styles = StyleSheet.create({
 
 function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
 
-            switch (route.name) {
-              case 'Resume':
-                iconName = 'home';
-                break;
-              case 'Juz Index':
-                iconName = 'list';
-                break;
-              case 'Surah Index':
-                iconName = 'list';
-                break;
-              case 'Go To Page #':
-                iconName = 'search';
-                break;
-              case 'Bookmarks':
-                iconName = 'bookmark';
-                break;
-              case 'Settings':
-                iconName = 'gear';
-                break;
-              default:
-                iconName = 'question-circle';
-            }
+              switch (route.name) {
+                case 'Resume':
+                  iconName = 'home';
+                  break;
+                case 'Juz Index':
+                  iconName = 'list';
+                  break;
+                case 'Surah Index':
+                  iconName = 'list';
+                  break;
+                case 'Go To Page #':
+                  iconName = 'search';
+                  break;
+                case 'Bookmarks':
+                  iconName = 'bookmark';
+                  break;
+                case 'Settings':
+                  iconName = 'gear';
+                  break;
+                default:
+                  iconName = 'question-circle';
+              }
 
-            return <Icon name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: 'royalblue',
-          tabBarInactiveTintColor: 'gray',
-        })}
-      >
-        <Tab.Screen name="Resume" component={HomeScreen} />
-        <Tab.Screen name="Juz Index" component={JuzIndexScreen} />
-        <Tab.Screen name="Surah Index" component={SurahIndexScreen} />
-        <Tab.Screen name="Go To Page #" component={GoToPageScreen} />
-        <Tab.Screen name="Bookmarks" component={BookmarksScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+              return <Icon name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: 'royalblue',
+            tabBarInactiveTintColor: 'gray',
+          })}
+        >
+          <Tab.Screen name="Resume" component={HomeScreen} />
+          <Tab.Screen name="Juz Index" component={JuzIndexScreen} />
+          <Tab.Screen name="Surah Index" component={SurahIndexScreen} />
+          <Tab.Screen name="Go To Page #" component={GoToPageScreen} />
+          <Tab.Screen name="Bookmarks" component={BookmarksScreen} />
+          <Tab.Screen name="Settings" component={SettingsScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 

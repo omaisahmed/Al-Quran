@@ -1,6 +1,6 @@
-# Al-Quran Navigator (React Native)
+# Al-Quran Navigator (React Native - Expo)
 
-A mobile application for Al-Quran navigation built with React Native.
+A mobile application for Al-Quran navigation built with React Native and Expo.
 
 ## Features:
 
@@ -12,8 +12,10 @@ A mobile application for Al-Quran navigation built with React Native.
 ## Getting Started:
 
 1.  Install dependencies: `npm install` or `yarn install`
-2.  Run the app on your device or emulator: `npx react-native run-android` or `npx react-native run-ios`
+2.  Start the Expo development server: `expo start`
+3.  Use the Expo Go app on your device to scan the QR code and run the app, or use an emulator.
 
 ## Dependencies:
 
--   react-native-vector-icons: For icons.  Follow installation instructions for your platform.
+-   react-native-vector-icons: For icons.  Follow installation instructions for your platform (managed by Expo).
+
