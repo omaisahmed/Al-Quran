@@ -41,7 +41,7 @@ export default function HomePage() {
       <SplashScreenComponent />
       {!showSplash && (
         <div className="flex flex-col h-screen">
-          <Tabs defaultActiveKey="resume" className="flex flex-col flex-1">
+          <Tabs defaultValue="resume" className="flex flex-col flex-1">
             <TabsList className="justify-center bg-secondary">
               <TabsTrigger value="resume" aria-label="Resume Reading">
                 <Home className="mr-2 h-4 w-4" />
