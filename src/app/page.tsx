@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Home, Bookmarks, Settings, List, Search } from "lucide-react";
+import { Home, Bookmark, Settings, List, Search } from "lucide-react";
 import { QuranReader } from "@/components/quran-reader";
 import { BookmarksTab } from "@/components/bookmarks-tab";
 import { SettingsTab } from "@/components/settings-tab";
@@ -25,7 +25,7 @@ const SplashScreenComponent = () => {
   return showSplash ? <Splash /> : null;
 };
 
-export default function Home() {
+export default function HomePage() {
   const [showSplash, setShowSplash] = React.useState(true);
 
   React.useEffect(() => {
@@ -60,7 +60,7 @@ export default function Home() {
                 Go To Page
               </TabsTrigger>
               <TabsTrigger value="bookmarks" aria-label="Bookmarks">
-                <Bookmarks className="mr-2 h-4 w-4" />
+                <Bookmark className="mr-2 h-4 w-4" />
                 Bookmarks
               </TabsTrigger>
               <TabsTrigger value="settings" aria-label="Settings">
