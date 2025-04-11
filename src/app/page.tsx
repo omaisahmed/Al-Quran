@@ -11,7 +11,7 @@ import { SurahIndexTab } from "@/components/surah-index-tab";
 import { GoToPageTab } from "@/components/go-to-page-tab";
 import { Splash } from "@/components/splash";
 
-const SplashScreen = () => {
+const SplashScreenComponent = () => {
   const [showSplash, setShowSplash] = React.useState(true);
 
   React.useEffect(() => {
@@ -38,7 +38,7 @@ export default function Home() {
 
   return (
     <>
-      <SplashScreen />
+      <SplashScreenComponent />
       {!showSplash && (
         <div className="flex flex-col h-screen">
           <Tabs defaultActiveKey="resume" className="flex flex-col flex-1">
@@ -94,4 +94,3 @@ export default function Home() {
     </>
   );
 }
-
