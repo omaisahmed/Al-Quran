@@ -19,3 +19,4 @@ A mobile application for Al-Quran navigation built with React Native and Expo.
 
 -   react-native-vector-icons: For icons.  Follow installation instructions for your platform (managed by Expo).
 
+

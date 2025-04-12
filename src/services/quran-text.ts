@@ -54,3 +54,4 @@ export const getPage = async (pageNumber) => {
         }, 500); // Simulate API delay
     });
 };
+
