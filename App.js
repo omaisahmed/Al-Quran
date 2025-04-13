@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { StyleSheet, View, Text, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Dimensions, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Dimensions, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StatusBar } from 'expo-status-bar';
@@ -155,6 +155,7 @@ const getSurahList = async () => {
         return json.data;
     } catch (error) {
         console.error("Error fetching Surah list:", error);
+        Alert.alert("Error", "Failed to load Surah list. Please check your internet connection.");
         return [];
     }
 };
@@ -166,6 +167,7 @@ const getSurah = async (number) => {
         return json.data;
     } catch (error) {
         console.error("Error fetching Surah:", error);
+        Alert.alert("Error", `Failed to load Surah ${number}. Please check your internet connection.`);
         return null;
     }
 };
@@ -178,6 +180,7 @@ const saveLastRead = async (surahNumber, ayahNumber) => {
         console.log('Last read saved successfully');
     } catch (error) {
         console.error('Error saving last read:', error);
+        Alert.alert("Error", "Failed to save last read. Please try again.");
     }
 };
 
@@ -192,6 +195,7 @@ const getLastRead = async () => {
         };
     } catch (error) {
         console.error('Error getting last read:', error);
+        Alert.alert("Error", "Failed to retrieve last read. Please try again.");
         return { surahNumber: null, ayahNumber: null };
     }
 };
@@ -206,9 +210,15 @@ function SurahIndexScreen({ navigation }) {
 
     useEffect(() => {
         const fetchSurahList = async () => {
-            const data = await getSurahList();
-            setSurahList(data);
-            setLoading(false);
+            try {
+                const data = await getSurahList();
+                setSurahList(data);
+            } catch (error) {
+                console.error("Error in fetchSurahList:", error);
+                Alert.alert("Error", "Failed to load Surah list. Please check your internet connection.");
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchSurahList();
@@ -252,9 +262,15 @@ function SurahScreen({ route, navigation }) {
 
     useEffect(() => {
         const fetchSurah = async () => {
-            const data = await getSurah(number);
-            setSurah(data);
-            setLoading(false);
+            try {
+                const data = await getSurah(number);
+                setSurah(data);
+            } catch (error) {
+                console.error("Error in fetchSurah:", error);
+                Alert.alert("Error", `Failed to load Surah ${number}. Please check your internet connection.`);
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchSurah();
@@ -335,14 +351,17 @@ function SurahScreen({ route, navigation }) {
     );
 }
 
-function JuzIndexScreen() {
+function JuzIndexScreen({ navigation }) {
     const juzList = Array.from({ length: 30 }, (_, i) => i + 1);
 
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
                 {juzList.map((juz) => (
-                    <TouchableOpacity key={juz}>
+                    <TouchableOpacity
+                        key={juz}
+                        onPress={() => navigation.navigate('QuranReader', { juz: juz })}
+                    >
                         <Text style={styles.listItem}>Juz {juz}</Text>
                     </TouchableOpacity>
                 ))}
@@ -382,6 +401,17 @@ function SettingsScreen() {
                     </TouchableOpacity>
                 </View>
             </View>
+        </View>
+    );
+}
+
+// Placeholder for QuranReader
+function QuranReader({ route }) {
+    const { juz } = route.params;
+
+    return (
+        <View style={styles.center}>
+            <Text>Quran Reader - Juz {juz}</Text>
         </View>
     );
 }
@@ -461,6 +491,7 @@ function App() {
                             title: route.params?.number ? `Surah ${route.params.number}` : 'Surah',
                         })} />
                         <Tab.Screen name="JuzIndex" component={JuzIndexScreen} options={{ title: 'Juz Index' }} />
+                        <Tab.Screen name="QuranReader" component={QuranReader} options={{ title: 'Quran Reader' }} />
                         <Tab.Screen name="Bookmarks" component={BookmarksScreen} options={{ title: 'Bookmarks' }} />
                         <Tab.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
                     </Tab.Navigator>
