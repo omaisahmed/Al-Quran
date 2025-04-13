@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, View, Text, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Dimensions, ActivityIndicator } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import SplashScreen from './components/splash';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -198,65 +197,8 @@ const getLastRead = async () => {
 };
 
 // Components
-function HomeScreen({ navigation }) {
-    const [lastRead, setLastRead] = useState({ surahNumber: null, ayahNumber: null });
-
-    useEffect(() => {
-        const fetchLastRead = async () => {
-            const storedLastRead = await getLastRead();
-            setLastRead(storedLastRead);
-        };
-
-        fetchLastRead();
-    }, []);
-
-    return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={styles.homeContainer}>
-                <Text style={styles.sectionTitle}>Welcome to Al-Quran Navigator</Text>
-
-                <View style={styles.searchSection}>
-                    <Icon name="search" size={20} color="gray" style={styles.searchIcon} />
-                    <TextInput
-                        style={styles.searchInput}
-                        placeholder="Search Surah"
-                        placeholderTextColor="gray"
-                    />
-                </View>
-
-                <TouchableOpacity style={styles.card} onPress={() => {
-                    if (lastRead.surahNumber !== null && lastRead.ayahNumber !== null) {
-                        navigation.navigate('Surah', { number: lastRead.surahNumber, initialAyah: lastRead.ayahNumber });
-                    } else {
-                        alert('No last read found. Please read a Surah first.');
-                    }
-                }}>
-                    <Text style={styles.cardTitle}>Last Read</Text>
-                    {lastRead.surahNumber ? (
-                        <Text style={styles.cardText}>
-                            Surah: {lastRead.surahNumber}, Ayah: {lastRead.ayahNumber}
-                        </Text>
-                    ) : (
-                        <Text style={styles.cardText}>No last read found.</Text>
-                    )}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('SurahIndex')}>
-                    <Text style={styles.cardTitle}>Surah Index</Text>
-                    <Text style={styles.cardText}>List of all Surahs in the Quran.</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('JuzIndex')}>
-                    <Text style={styles.cardTitle}>Juz Index</Text>
-                    <Text style={styles.cardText}>Index of all 30 Juz in the Quran.</Text>
-                </TouchableOpacity>
-                <Text style={styles.footer}>
-                    Powered by AlQuran.Cloud API
-                </Text>
-            </ScrollView>
-        </SafeAreaView>
-    );
-}
+import SplashScreen from './components/splash';
+import HomeScreen from './components/HomeScreen';
 
 function SurahIndexScreen({ navigation }) {
     const [surahList, setSurahList] = useState([]);
@@ -529,4 +471,3 @@ function App() {
 }
 
 export default App;
-
